@@ -1,0 +1,92 @@
+{
+  "name": "grubhub",
+  "displayName": "Grubhub",
+  "description": "A copilot chat extension for VSCode",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.97.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "chatParticipants": [
+      {
+        "id": "grubhub",
+        "fullName": "grubhub",
+        "name": "grubhub",
+        "description": "Order food from Grubhub 🍔",
+        "isSticky": true
+      }
+    ],
+    "languageModelTools": [
+      {
+        "name": "grubhub-api_add_to_cart",
+        "tags": [
+          "grubhub-api",
+          "cart"
+        ],
+        "toolReferenceName": "addToCart",
+        "displayName": "Add to Cart",
+        "modelDescription": "Add an item to the Grubhub shopping cart",
+        "icon": "$(cart)",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "cart_id": {
+              "type": "string",
+              "description": "The ID of the cart to add the item to"
+            },
+            "menu_item_id": {
+              "type": "string",
+              "description": "The ID of the menu item to add"
+            },
+            "restaurant_id": {
+              "type": "string",
+              "description": "The ID of the restaurant"
+            },
+            "quantity": {
+              "type": "integer",
+              "description": "Number of items to add",
+              "default": 1
+            },
+            "special_instructions": {
+              "type": "string",
+              "description": "Special instructions for the order",
+              "default": ""
+            }
+          },
+          "required": [
+            "cart_id",
+            "menu_item_id",
+            "restaurant_id"
+          ]
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "yarn run compile && yarn run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.97.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@typescript-eslint/parser": "^6.19.1",
+    "@vscode/test-cli": "^0.0.4",
+    "@vscode/test-electron": "^2.3.9",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@vscode/chat-extension-utils": "^0.0.0-alpha.5"
+  }
+}
