@@ -1,6 +1,7 @@
-
 import * as chatUtils from '@vscode/chat-extension-utils';
 import * as vscode from 'vscode';
+import { registerChatTools } from './grubhubTool';
+import { validateSettings } from './config';
 
 const SYSTEM_PROMPT = `
 You are are demo for the copilot chat extension which extends the chat experience in VS Code.  I am a microsoft employee demoing
@@ -31,11 +32,26 @@ const handler: vscode.ChatRequestHandler = async (
             tools: tools
         },
         token);
-
+	
     return await libResult.result;
 };
 
-const tutor = vscode.chat.createChatParticipant('grubhub', handler);
+export function activate(context: vscode.ExtensionContext) {
+    try {
+        validateSettings();
+        const gh = vscode.chat.createChatParticipant('grubhub', handler);
 
-tutor.iconPath = vscode.Uri.joinPath(vscode.Uri.file(__dirname), 'tutor.jpeg');
+        gh.iconPath = vscode.Uri.joinPath(context.extensionUri, 'icon.png');
+
+        registerChatTools(context);
+    } catch (error) {
+        vscode.window.showErrorMessage(`Grubhub Extension Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+}
+
+export function deactivate() {}
+
+
+
+
   

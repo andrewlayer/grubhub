@@ -2,6 +2,7 @@
   "name": "grubhub",
   "displayName": "Grubhub",
   "description": "A copilot chat extension for VSCode",
+  "icon": "./icon.png",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.97.0"
@@ -15,7 +16,7 @@
     "chatParticipants": [
       {
         "id": "grubhub",
-        "fullName": "grubhub",
+        "fullName": "Grubhub",
         "name": "grubhub",
         "description": "Order food from Grubhub 🍔",
         "isSticky": true
@@ -25,8 +26,7 @@
       {
         "name": "grubhub-api_add_to_cart",
         "tags": [
-          "grubhub-api",
-          "cart"
+          "grubhub"
         ],
         "toolReferenceName": "addToCart",
         "displayName": "Add to Cart",
@@ -37,7 +37,7 @@
           "properties": {
             "cart_id": {
               "type": "string",
-              "description": "The ID of the cart to add the item to"
+              "description": "The ID of the cart to add the item to. If not provided, a new cart will be created."
             },
             "menu_item_id": {
               "type": "string",
@@ -56,16 +56,182 @@
               "type": "string",
               "description": "Special instructions for the order",
               "default": ""
+            },
+            "cost": {
+              "type": "number",
+              "description": "The cost of the menu item"
             }
           },
           "required": [
-            "cart_id",
             "menu_item_id",
-            "restaurant_id"
+            "restaurant_id",
+            "cost"
           ]
         }
+      },
+      {
+        "name": "grubhub-api_get_carts",
+        "tags": ["grubhub"],
+        "toolReferenceName": "getCarts",
+        "displayName": "Get Carts",
+        "modelDescription": "Get all Grubhub shopping carts",
+        "icon": "$(list-unordered)"
+      },
+      {
+        "name": "grubhub-api_create_cart",
+        "tags": ["grubhub"],
+        "toolReferenceName": "createCart",
+        "displayName": "Create Cart",
+        "modelDescription": "Create a new Grubhub shopping cart",
+        "icon": "$(add)"
+      },
+      {
+        "name": "grubhub-api_get_restaurant_items",
+        "tags": ["grubhub"],
+        "toolReferenceName": "getRestaurantItems",
+        "displayName": "Get Restaurant Items",
+        "modelDescription": "Get menu items from a Grubhub restaurant",
+        "icon": "$(list-tree)",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "restaurant_id": {
+              "type": "string",
+              "description": "The ID of the restaurant"
+            }
+          },
+          "required": ["restaurant_id"]
+        }
+      },
+      {
+        "name": "grubhub-api_update_delivery",
+        "tags": ["grubhub"],
+        "toolReferenceName": "updateDelivery",
+        "displayName": "Update Delivery Info",
+        "modelDescription": "Update delivery information for a cart",
+        "icon": "$(location)",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "cart_id": {
+              "type": "string",
+              "description": "The ID of the cart"
+            },
+            "address_lines": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Array of address lines (e.g. ['110 Hoboken Ave', 'Apt 317'])",
+              "minItems": 1,
+              "maxItems": 2
+            },
+            "city": {
+              "type": "string",
+              "description": "City name"
+            },
+            "state": {
+              "type": "string",
+              "description": "Two-letter state code",
+              "pattern": "^[A-Z]{2}$"
+            },
+            "zip": {
+              "type": "string",
+              "description": "5-digit ZIP code",
+              "pattern": "^\\d{5}$"
+            }
+          },
+          "required": ["cart_id", "address_lines", "city", "state", "zip"]
+        }
+      },
+      {
+        "name": "grubhub-api_get_bill",
+        "tags": ["grubhub"],
+        "toolReferenceName": "getBill",
+        "displayName": "Get Bill",
+        "modelDescription": "Get the bill details for a cart.  Output the status of the order, if it is ready or not",
+        "icon": "$(credit-card)",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "cart_id": {
+              "type": "string",
+              "description": "The ID of the cart"
+            }
+          },
+          "required": ["cart_id"]
+        }
+      },
+      {
+        "name": "grubhub-api_list_restaurants",
+        "tags": ["grubhub"],
+        "toolReferenceName": "listRestaurants",
+        "displayName": "List Restaurants",
+        "modelDescription": "List your favorite Grubhub restaurants",
+        "icon": "$(list-flat)"
+      },
+      {
+        "name": "grubhub-api_checkout_cart",
+        "tags": ["grubhub"],
+        "toolReferenceName": "checkoutCart",
+        "displayName": "Checkout Cart",
+        "modelDescription": "Complete the order and checkout the cart",
+        "icon": "$(check)",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "cart_id": {
+              "type": "string",
+              "description": "The ID of the cart to checkout"
+            }
+          },
+          "required": ["cart_id"]
+        }
+      },
+      {
+        "name": "grubhub-api_delete_cart",
+        "tags": ["grubhub"],
+        "toolReferenceName": "deleteCart",
+        "displayName": "Delete Cart",
+        "modelDescription": "Delete a Grubhub shopping cart",
+        "icon": "$(trash)",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "cart_id": {
+              "type": "string",
+              "description": "The ID of the cart to delete"
+            }
+          },
+          "required": ["cart_id"]
+        }
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Grubhub",
+      "properties": {
+        "grubhub.bearerToken": {
+          "type": "string",
+          "default": "",
+          "description": "Required: Grubhub API Bearer Token"
+        },
+        "grubhub.cookie": {
+          "type": "string",
+          "default": "",
+          "description": "Optional: Grubhub API Cookie - Some features may require this"
+        },
+        "grubhub.perimeterX": {
+          "type": "string",
+          "default": "",
+          "description": "Optional: Grubhub API Perimeter-X Token - Some features may require this"
+        },
+        "grubhub.point": {
+          "type": "string",
+          "default": "",
+          "description": "Optional: Default location point for restaurant searches"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "yarn run compile",
@@ -87,6 +253,8 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@vscode/chat-extension-utils": "^0.0.0-alpha.5"
+    "@vscode/chat-extension-utils": "^0.0.0-alpha.5",
+    "@vscode/prompt-tsx": "^0.0.0-alpha.5",
+    "dotenv": "^16.4.7"
   }
 }

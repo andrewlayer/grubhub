@@ -1,71 +1,74 @@
-# grubhub README
+# Grubhub VS Code Extension
 
-This is the README for your extension "grubhub". After writing up a brief description, we recommend including the following sections.
+Order food from Grubhub directly through VS Code's Copilot Chat interface! This extension allows you to browse restaurants, add items to cart, and complete orders without leaving your development environment.
+
+![@grubhub participant](https://storage.googleapis.com/generic-assets/grubhub_extension.png)
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- List your favorite restaurants
+- Browse restaurant menus
+- Add items to cart
+- Update delivery information
+- View bill details
+- Complete checkout
+- Manage multiple carts
 
-For example if there is an image subfolder under your extension project workspace:
+## Setup
 
-\!\[feature X\]\(images/feature-x.png\)
+1. Install the extension from the VS Code marketplace
+2. Configure the required settings:
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+### Required Settings
 
-## Requirements
+- `grubhub.bearerToken`: Your Grubhub API Bearer Token
+  - To get this token:
+    1. Log into Grubhub in your browser
+    2. Open Developer Tools (F12)
+    3. Go to Network tab
+    4. Look for requests to `https://api-gtm.grubhub.com/`
+    5. Find the "Authorization" header value (starts with "Bearer")
+    - Note: This token expires every few hours and will need to be updated
+- `grubhub.point`: Your location coordinates for restaurant searches
+  - Format: `POINT(longitude latitude)`
+  - Example: `POINT(-73.98915 40.74831)`
+  - You can use Google Maps to find coordinates for your location
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+### Optional Settings
 
-## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
 
-For example:
+- `grubhub.perimeterX`: Anti-bot token (optional)
+- `grubhub.cookie`: Session cookie (optional)
+  - These can be found in the same network requests as the bearer token
+  - The extension will work without these, but might require more frequent token updates
 
-This extension contributes the following settings:
+### Important Notes
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+- You must have restaurants in your Grubhub favorites list to use the restaurant listing feature
+  - Add restaurants to your favorites on the Grubhub website
+- After updating any settings, you may need to restart VS Code for changes to take effect
+- If you encounter authentication errors, try getting a new bearer token
 
-## Known Issues
+## Usage
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+1. Open VS Code's Copilot Chat
+2. Select the Grubhub participant
+3. Start ordering with natural language commands like:
+   - "Show me my favorite restaurants"
+   - "What's on the menu at [restaurant]?"
+   - "Add [item] to my cart"
+   - "Show my current bill"
+   - "Complete my order"
 
-## Release Notes
+## Troubleshooting
 
-Users appreciate release notes as you update your extension.
+- Lol this is so stupid, email me andrewh@buildwithlayer.com if you really want this thing working.
 
-### 1.0.0
+## Contributing
 
-Initial release of ...
+Want to contribute, be my guest.
 
-### 1.0.1
+## License
 
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+MIT
