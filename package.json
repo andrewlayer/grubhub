@@ -2,6 +2,9 @@
   "name": "grubhub",
   "displayName": "Grubhub",
   "description": "A copilot chat extension for VSCode",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andrewlayer/grubhub"},
   "icon": "./icon.png",
   "version": "0.0.1",
   "engines": {
