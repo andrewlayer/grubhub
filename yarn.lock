@@ -216,7 +216,7 @@
   dependencies:
     "@vscode/prompt-tsx" "^0.3.0-alpha.14"
 
-"@vscode/prompt-tsx@^0.0.0-alpha.5", "@vscode/prompt-tsx@^0.3.0-alpha.14":
+"@vscode/prompt-tsx@^0.3.0-alpha.14":
   version "0.3.0-alpha.19"
   resolved "https://registry.yarnpkg.com/@vscode/prompt-tsx/-/prompt-tsx-0.3.0-alpha.19.tgz#4ab31d86bed40fef68aedfff04e7593b64fe68a5"
   integrity sha512-6uZWV5aoh1aYPFd7bNzMzUTknk4Pm7wdRFrJAm2VJGXJJ2wBaY9O7lMSXDsP1dYCSkhen6jBpAG+1QxG7nwomw==
@@ -508,11 +508,6 @@ doctrine@^3.0.0:
   integrity sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==
   dependencies:
     esutils "^2.0.2"
-
-dotenv@^16.4.7:
-  version "16.4.7"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.4.7.tgz#0e20c5b82950140aa99be360a8a5f52335f53c26"
-  integrity sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==
 
 eastasianwidth@^0.2.0:
   version "0.2.0"

@@ -2,6 +2,7 @@
   "name": "grubhub",
   "displayName": "Grubhub",
   "description": "A copilot chat extension for VSCode",
+  "publisher": "buildwithlayer",
   "repository": {
     "type": "git",
     "url": "https://github.com/andrewlayer/grubhub"},
@@ -22,7 +23,24 @@
         "fullName": "Grubhub",
         "name": "grubhub",
         "description": "Order food from Grubhub 🍔",
-        "isSticky": true
+        "isSticky": true,
+        "disambiguation": [
+          {
+            "category": "food_ordering",
+            "description": "The user wants to order food, browse restaurants, or manage their Grubhub orders.  Start off my listing their favorite restaurants.",
+            "examples": [
+              "I want to order some food",
+              "What restaurants are near me?",
+              "Show me the menu for a restaurant",
+              "Add a burger to my cart",
+              "What's in my shopping cart?",
+              "Place my order",
+              "I'm hungry",
+              "Order lunch",
+              "Get me some dinner"
+            ]
+          }
+        ]
       }
     ],
     "languageModelTools": [
@@ -256,8 +274,6 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@vscode/chat-extension-utils": "^0.0.0-alpha.5",
-    "@vscode/prompt-tsx": "^0.0.0-alpha.5",
-    "dotenv": "^16.4.7"
+    "@vscode/chat-extension-utils": "^0.0.0-alpha.5"
   }
 }
