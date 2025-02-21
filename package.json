@@ -103,7 +103,7 @@
         "tags": ["grubhub"],
         "toolReferenceName": "createCart",
         "displayName": "Create Cart",
-        "modelDescription": "Create a new Grubhub shopping cart",
+        "modelDescription": "Create a new Grubhub shopping cart. ONLY CALL THIS IF THE USER EXPLICITLY ASKS YOU TO CREATE A CART",
         "icon": "$(add)"
       },
       {
@@ -236,20 +236,10 @@
           "default": "",
           "description": "Required: Grubhub API Bearer Token"
         },
-        "grubhub.cookie": {
+        "grubhub.address": {
           "type": "string",
           "default": "",
-          "description": "Optional: Grubhub API Cookie - Some features may require this"
-        },
-        "grubhub.perimeterX": {
-          "type": "string",
-          "default": "",
-          "description": "Optional: Grubhub API Perimeter-X Token - Some features may require this"
-        },
-        "grubhub.point": {
-          "type": "string",
-          "default": "",
-          "description": "Optional: Default location point for restaurant searches"
+          "description": "Required: Your delivery address. We use OpenStreetMap for geocoding - you can verify your address works at https://nominatim.openstreetmap.org/ui/ (e.g. '510 Willus Ave Denmount NJ')"
         }
       }
     }

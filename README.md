@@ -29,24 +29,15 @@ Order food from Grubhub directly through VS Code's Copilot Chat interface! This 
     4. Look for requests to `https://api-gtm.grubhub.com/`
     5. Find the "Authorization" header value (starts with "Bearer")
     - Note: This token expires every few hours and will need to be updated
-- `grubhub.point`: Your location coordinates for restaurant searches
-  - Format: `POINT(longitude latitude)`
-  - Example: `POINT(-73.98915 40.74831)`
-  - You can use Google Maps to find coordinates for your location
-
-### Optional Settings
-
-
-
-- `grubhub.perimeterX`: Anti-bot token (optional)
-- `grubhub.cookie`: Session cookie (optional)
-  - These can be found in the same network requests as the bearer token
-  - The extension will work without these, but might require more frequent token updates
+- `grubhub.address`: Your delivery address
+  - Format: Simple address string (e.g. "220 Willow Ave Hoboken NJ")
+  - We use OpenStreetMap for geocoding - verify your address works at https://nominatim.openstreetmap.org/ui/
+  - The extension will automatically convert this to coordinates for searching
 
 ### Important Notes
 
 - You must have restaurants in your Grubhub favorites list to use the restaurant listing feature
-  - Add restaurants to your favorites on the Grubhub website
+- Add restaurants to your favorites on the Grubhub website
 - After updating any settings, you may need to restart VS Code for changes to take effect
 - If you encounter authentication errors, try getting a new bearer token
 
@@ -64,6 +55,10 @@ Order food from Grubhub directly through VS Code's Copilot Chat interface! This 
 ## Troubleshooting
 
 - Lol this is so stupid, email me andrewh@buildwithlayer.com if you really want this thing working.
+
+## Known Issues
+- [ ] Adding to cart doesn't always succeed for all restraunts (likely due to the missing params in the body of the `/carts/{{cart_id}}/lines` endpoint)
+- [ ] Auth sucks because the bearer token expires every few hours
 
 ## Contributing
 

@@ -6,16 +6,7 @@ interface GeocodingResult {
 
 export async function geocodeAddress(address: string): Promise<{latitude: string; longitude: string}> {
     try {
-        // Split and clean address components
-        const parts = address.split(',').map(s => s.trim());
-        const street = parts[0];
-        const apt = parts[1];
-        const locationPart = parts[parts.length - 1];
-        const [city, state, zip] = locationPart.split(' ');
-
-        // Build search query
-        const searchQuery = `${street} ${city} ${state} ${zip}`;
-        const encodedQuery = encodeURIComponent(searchQuery);
+        const encodedQuery = encodeURIComponent(address);
 
         const response = await fetch(
             `https://nominatim.openstreetmap.org/search?q=${encodedQuery}&format=json&limit=1`,

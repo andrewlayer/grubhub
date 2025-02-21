@@ -1,4 +1,4 @@
-import { BEARER_TOKEN, COOKIE, PERIMETER_X, POINT } from './config';
+import { BEARER_TOKEN, COOKIE, PERIMETER_X, getPoint } from './config';
 import { randomUUID } from 'crypto';
 import { geocodeAddress } from './services/geocoding';
 
@@ -222,7 +222,8 @@ export class GrubhubClient {
             );
 
             if (!response.ok) {
-                throw new Error(`Failed to add item to cart: ${response.status}`);
+                const errorText = await response.text();
+                throw new Error(`Failed to add item to cart: ${response.status} --> ${errorText}`);
             }
 
             const data = await response.json();
@@ -299,10 +300,11 @@ export class GrubhubClient {
 
     async getRestaurantItems(restaurantId: string): Promise<RestaurantItemsResponse> {
         try {
+            const point = await getPoint();
             const baseUrl = `${GrubhubClient.BASE_URL}/restaurant_gateway/feed/${restaurantId}/None`;
             const params = new URLSearchParams({
                 time: Date.now().toString(),
-                location: POINT,
+                location: point,
                 operationId: randomUUID(),
                 isFutureOrder: 'false',
                 restaurantStatus: 'ORDERABLE',
@@ -505,10 +507,11 @@ export class GrubhubClient {
             const favoritesData = await favoritesResponse.json() as FavoriteRestaurantsResponse;
 
             // Step 3: Get details for each restaurant
+            const point = await getPoint();
             const restaurants = await Promise.all(
                 favoritesData.favorite_restaurants.map(async (fav) => {
                     const detailsResponse = await fetch(
-                        `${GrubhubClient.BASE_URL}/restaurants/availability_summaries?location=${POINT}&includeImages=true&ids=${fav.restaurant_id}%3Astandard`,
+                        `${GrubhubClient.BASE_URL}/restaurants/availability_summaries?location=${point}&includeImages=true&ids=${fav.restaurant_id}%3Astandard`,
                         {
                             method: 'GET',
                             headers: GrubhubClient.DEFAULT_HEADERS
