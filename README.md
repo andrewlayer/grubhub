@@ -30,7 +30,7 @@ Order food from Grubhub directly through VS Code's Copilot Chat interface! This 
     5. Find the "Authorization" header value (starts with "Bearer")
     - Note: This token expires every few hours and will need to be updated
 - `grubhub.address`: Your delivery address
-  - Format: Simple address string (e.g. "220 Willow Ave Hoboken NJ")
+  - Format: Simple address string (e.g. "550 jenson ave, San Jose, CA")
   - We use OpenStreetMap for geocoding - verify your address works at https://nominatim.openstreetmap.org/ui/
   - The extension will automatically convert this to coordinates for searching
 
